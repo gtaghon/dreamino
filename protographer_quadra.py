@@ -41,14 +41,15 @@ AAcolors = {
 "VAL":(255,0,0)
 }
 
-def download_af_pdb(filename, out):
+def download_af_pdb(uniprot_id, out):
+    filename = "AF-" + uniprot_id + "-F1-model_v4.pdb"
     if filename in os.listdir(out):
         print(filename, "already in", out, "; skipping download.")
     else:
         url = "https://alphafold.ebi.ac.uk/files/" + filename
         filename = wget.download(url, out=out)
-        print("Fetched:", out + filename)
-    return
+        print("Fetched:", out)
+    return filename
 
 
 def get_pdb_points(filename):
@@ -141,11 +142,10 @@ def pdb_take_photo(points_3d, colorlist, rvec, wiggle):
 
 pdb = sys.argv[1]
 out = sys.argv[2]
-wigrange = 0.02
-photos = 1000
+wigrange = 1.0
+photos = 100
 
-download_af_pdb(pdb, out)
-filename = out + pdb
+filename = download_af_pdb(pdb, out)
 structure_id, points_3d, colorlist = get_pdb_points(filename)
 
 r_vecs = [[1, 1, 1],  # "Front"
