@@ -1,7 +1,7 @@
 absl-py
 astunparse
 biopython
-cachetool
+cachetools
 certifi
 charset-normalizer
 contourpy
